@@ -1,0 +1,32 @@
+FROM nvidia/cuda:11.8.0-devel-ubuntu22.04 AS joligen_build
+
+LABEL description="Generative AI Toolset with GANs and Diffusion for Real-World Applications"
+LABEL maintainer="contact@jolibrain.com"
+
+# user jenkins
+RUN addgroup --gid 127 jenkins
+RUN adduser jenkins --uid 119 --gid 127 --system
+
+# add missing apt dependencies
+RUN export DEBIAN_FRONTEND=noninteractive && \
+    apt-get update -y && apt-get install -y \
+    python3-pip \
+    python3-opencv \
+    python3-pytest \
+    ninja-build \
+    sudo \
+    wget \
+    git \
+    unzip
+
+USER jenkins
+RUN mkdir /home/jenkins/app
+WORKDIR /home/jenkins/app
+RUN python3 -m pip install --upgrade pip
+ADD requirements.txt .
+RUN pip3 install -r requirements.txt --upgrade
+RUN pip3 install uvicorn fastapi
+RUN mkdir .cache && mkdir .cache/torch 
+RUN export TORCH_HOME=/home/jenkins/app/.cache/torch
+
+ADD . /home/jenkins/app

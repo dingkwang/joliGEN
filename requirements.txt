@@ -1,0 +1,25 @@
+# torch==2.1 -f https://download.pytorch.org/whl/cu117/torch_stable.html
+# torchvision==0.16
+# numpy==1.23.1
+Pillow
+timm
+visdom
+torchviz
+imgaug
+dominate
+wget
+tqdm
+git+https://github.com/nupurkmr9/vision-aided-gan.git
+einops
+torchinfo
+addict
+thop
+pydantic==1.10.10
+positional_encodings
+onnx
+aim
+git+https://github.com/facebookresearch/segment-anything.git
+piq
+git+https://github.com/ChaoningZhang/MobileSAM.git
+Ninja
+lpips
