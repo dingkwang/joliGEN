@@ -102,10 +102,13 @@ def crop_image(
         # Extract the rows and columns containing non-zero elements
         non_zero_rows = non_zero_indices[1]
         non_zero_cols = non_zero_indices[0]
-
-        # Find the minimum and maximum indices for rows and columns
-        min_row, max_row = np.min(non_zero_rows), np.max(non_zero_rows)
-        min_col, max_col = np.min(non_zero_cols), np.max(non_zero_cols)
+        try:
+            # Find the minimum and maximum indices for rows and columns
+            min_row, max_row = np.min(non_zero_rows), np.max(non_zero_rows)
+            min_col, max_col = np.min(non_zero_cols), np.max(non_zero_cols)
+        except Exception as e:
+            print(f"error{e}")
+            pass
 
         xmin = str(min_row)
         ymin = str(min_col)

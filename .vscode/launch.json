@@ -1,0 +1,33 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "train.py",
+            "type": "python",
+            "python": "/home/dkwang/Documents/miniconda3/envs/joli/bin/python",
+            "request": "launch",
+            "program": "train.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": [
+                "--G_netG",
+                "unet_mha_ref_attn",
+                "--data_dataset_mode",
+                "self_supervised_labeled_mask_online_ref",
+                "--model_type",
+                "palette",
+                "--alg_palette_conditioning",
+                "",
+                "--alg_palette_cond_image_creation",
+                "y_t",
+                "--dataroot",
+                "/home/dkwang/sci/VTON/joliGEN/datasets/vton",
+                "--data_relative_paths",
+                "--data_online_creation_rand_mask_A"
+            ]
+        }
+    ]
+}

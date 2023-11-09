@@ -90,35 +90,32 @@ class UnalignedLabeledMaskOnlineDataset(BaseDataset):
         clamp_semantics=True,
     ):
         # Domain A
-        try:
-            if self.opt.data_online_creation_mask_delta_A_ratio == [[]]:
-                mask_delta_A = self.opt.data_online_creation_mask_delta_A
-            else:
-                mask_delta_A = self.opt.data_online_creation_mask_delta_A_ratio
 
-            A_img, A_label_mask, A_ref_bbox, A_ref_bbox_id = crop_image(
-                A_img_path,
-                A_label_mask_path,
-                mask_delta=mask_delta_A,
-                mask_random_offset=self.opt.data_online_creation_mask_random_offset_A,
-                crop_delta=self.opt.data_online_creation_crop_delta_A,
-                mask_square=self.opt.data_online_creation_mask_square_A,
-                crop_dim=self.opt.data_online_creation_crop_size_A,
-                output_dim=self.opt.data_load_size,
-                context_pixels=self.opt.data_online_context_pixels,
-                load_size=self.opt.data_online_creation_load_size_A,
-                select_cat=self.opt.data_online_select_category,
-                fixed_mask_size=self.opt.data_online_fixed_mask_size,
-                inverted_mask=self.opt.data_inverted_mask,
-                single_bbox=self.opt.data_online_single_bbox,
-            )
+        print("get image()")
+        if self.opt.data_online_creation_mask_delta_A_ratio == [[]]:
+            mask_delta_A = self.opt.data_online_creation_mask_delta_A
+        else:
+            mask_delta_A = self.opt.data_online_creation_mask_delta_A_ratio
 
-            self.cat_A_ref_bbox = torch.tensor(A_ref_bbox[0])
-            A_ref_bbox = A_ref_bbox[1:]
+        A_img, A_label_mask, A_ref_bbox, A_ref_bbox_id = crop_image(
+            A_img_path,
+            A_label_mask_path,
+            mask_delta=mask_delta_A,
+            mask_random_offset=self.opt.data_online_creation_mask_random_offset_A,
+            crop_delta=self.opt.data_online_creation_crop_delta_A,
+            mask_square=self.opt.data_online_creation_mask_square_A,
+            crop_dim=self.opt.data_online_creation_crop_size_A,
+            output_dim=self.opt.data_load_size,
+            context_pixels=self.opt.data_online_context_pixels,
+            load_size=self.opt.data_online_creation_load_size_A,
+            select_cat=self.opt.data_online_select_category,
+            fixed_mask_size=self.opt.data_online_fixed_mask_size,
+            inverted_mask=self.opt.data_inverted_mask,
+            single_bbox=self.opt.data_online_single_bbox,
+        )
 
-        except Exception as e:
-            print(e, "domain A data loading for ", A_img_path)
-            return None
+        self.cat_A_ref_bbox = torch.tensor(A_ref_bbox[0])
+        A_ref_bbox = A_ref_bbox[1:]
 
         A, A_label_mask, A_ref_bbox = self.transform(A_img, A_label_mask, A_ref_bbox)
 
