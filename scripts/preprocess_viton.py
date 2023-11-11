@@ -53,7 +53,6 @@ def process(image, zf, target_dir, dilate):
     if not np.any(mask):
         print(image.replace("/image/", "/image-parse-v3/").replace(".jpg", ".png"))
         return
-
     kernel = np.ones((dilate, dilate), np.uint8)
     mask = cv2.dilate(mask, kernel)
     rel_mask = stage / "mask" / (basename + ".png")
