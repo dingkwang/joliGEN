@@ -9,6 +9,7 @@ import torchvision.transforms.functional as F
 from PIL import Image
 from torchvision.transforms import InterpolationMode
 from tqdm import tqdm
+
 from data.utils import load_image
 
 
@@ -65,9 +66,7 @@ def crop_image(
             bbox_img = cv2.imread(bbox_path)
 
     except Exception as e:
-        raise ValueError(
-            f"failure with loading label {bbox_path} for image {img_path}"
-        ) from e
+        raise ValueError(f"failure with loading label {bbox_path} for image {img_path}") from e
 
     if bbox_path.endswith(".txt"):
         # Bbox file

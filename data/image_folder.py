@@ -161,11 +161,13 @@ def make_ref_path_list(dir, paths, max_dataset_size=float("inf")):
             path_to_ref = line_split[1]
 
             path = os.path.join(root, path_to_ref)
-
-            with open(path, "r") as f:
-                paths_ref_list = f.read().split("\n")
-
-            paths_ref_list.remove("")
+            
+            if path.endswith(".txt"):
+                with open(path, "r") as f:
+                    paths_ref_list = f.read().split("\n")
+                paths_ref_list.remove("")
+            else:
+                paths_ref_list = [path]
 
             ref[line_split[0]] = paths_ref_list
 

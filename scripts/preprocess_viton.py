@@ -1,11 +1,13 @@
 import argparse
-from pathlib import Path
-import zipfile
-from tqdm import tqdm
 import os
+import os.path as osp
 import shutil
+import zipfile
+from pathlib import Path
+
 import cv2
 import numpy as np
+from tqdm import tqdm
 
 
 def parse_args():
@@ -45,18 +47,43 @@ def process(image, zf, target_dir, dilate):
     mask = zf.read(mask)
     mask = cv2.imdecode(np.frombuffer(mask, np.uint8), 1)
     orange = np.array([0, 85, 254])
+
     mask = cv2.inRange(mask, orange, orange)
     mask = np.clip(mask, 0, 1)
+    if not np.any(mask):
+        print(image.replace("/image/", "/image-parse-v3/").replace(".jpg", ".png"))
+        return
+
     kernel = np.ones((dilate, dilate), np.uint8)
     mask = cv2.dilate(mask, kernel)
     rel_mask = stage / "mask" / (basename + ".png")
     target = target_dir / rel_mask
     cv2.imwrite(str(target), mask)
 
+    vis_mask_file = stage / "mask_vis" / (basename + ".png")
+    target = target_dir / vis_mask_file
+    vis_mask = mask * 255
+    cv2.imwrite(str(target), vis_mask)
+
+    file_inside_zip = image.replace("/image/", "/cloth/")
+    destination_path = (target_dir / stage / "ref" / osp.basename(file_inside_zip)).resolve()
+    source = zf.open(file_inside_zip)
+    content = source.read()
+    source.close()
+    target = open(destination_path, 'wb')
+    target.write(content)
+    target.close()
+
     # add paths
     pairs = target_dir / stage / "paths.txt"
     pairs = pairs.open("a")
     pairs.write(f"{rel_image} {rel_mask}\n")
+
+    # condition
+    condition = target_dir / stage / "conditions.txt"
+    condition_file = condition.open("a")
+    destination_path_relative = stage / "ref" / osp.basename(file_inside_zip)
+    condition_file.write(f"{rel_image} {destination_path_relative}\n")
 
 
 def main():
@@ -68,7 +95,7 @@ def main():
     target_dir = Path(args.target_dir)
     assert not target_dir.exists()
     for folder1 in ["trainA", "testA"]:
-        for folder2 in ["imgs", "mask"]:
+        for folder2 in ["imgs", "mask", "ref", "mask_vis"]:
             folder = target_dir / folder1 / folder2
             folder.mkdir(parents=True)
 
