@@ -27,7 +27,7 @@ class TrainOptions(BaseOptions):
         parser.add_argument(
             "--output_display_type",
             type=str,
-            default=["none"],
+            default=["visdom"],
             nargs="*",
             choices=["visdom", "aim", "none"],
             help="output display, either visdom, aim or no output",
@@ -64,13 +64,13 @@ class TrainOptions(BaseOptions):
         parser.add_argument(
             "--output_display_visdom_port",
             type=int,
-            default=8825,
+            default=8097,
             help="visdom port of the web display",
         )
         parser.add_argument(
             "--output_display_aim_port",
             type=int,
-            default=5380,
+            default=53800,
             help="aim port of the web display",
         )
         parser.add_argument(

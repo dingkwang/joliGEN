@@ -9,7 +9,6 @@ import torchvision.transforms.functional as F
 from PIL import Image
 from torchvision.transforms import InterpolationMode
 from tqdm import tqdm
-
 from data.utils import load_image
 
 
@@ -66,7 +65,9 @@ def crop_image(
             bbox_img = cv2.imread(bbox_path)
 
     except Exception as e:
-        raise ValueError(f"failure with loading label {bbox_path} for image {img_path}") from e
+        raise ValueError(
+            f"failure with loading label {bbox_path} for image {img_path}"
+        ) from e
 
     if bbox_path.endswith(".txt"):
         # Bbox file
@@ -101,6 +102,7 @@ def crop_image(
         # Extract the rows and columns containing non-zero elements
         non_zero_rows = non_zero_indices[1]
         non_zero_cols = non_zero_indices[0]
+
         # Find the minimum and maximum indices for rows and columns
         min_row, max_row = np.min(non_zero_rows), np.max(non_zero_rows)
         min_col, max_col = np.min(non_zero_cols), np.max(non_zero_cols)
@@ -244,9 +246,12 @@ def crop_image(
             y_min_ref = ymin
             y_max_ref = ymax
 
-            if (x_min_ref < context_pixels or y_min_ref < context_pixels or
-                    x_max_ref + context_pixels > img.shape[1] or
-                    y_max_ref + context_pixels > img.shape[0]):
+            if (
+                x_min_ref < context_pixels
+                or y_min_ref < context_pixels
+                or x_max_ref + context_pixels > img.shape[1]
+                or y_max_ref + context_pixels > img.shape[0]
+            ):
                 new_context_pixels = min(
                     x_min_ref,
                     y_min_ref,
@@ -361,9 +366,15 @@ def crop_image(
             x_crop = random.randint(x_crop_min, x_crop_max)
             y_crop = random.randint(y_crop_min, y_crop_max)
 
-        if (x_crop < context_pixels or x_crop + crop_size + context_pixels > img.shape[1] or
-                y_crop < context_pixels or y_crop + crop_size + context_pixels > img.shape[0]):
-            raise ValueError(f"Image cropping failed for {img_path}.",)
+        if (
+            x_crop < context_pixels
+            or x_crop + crop_size + context_pixels > img.shape[1]
+            or y_crop < context_pixels
+            or y_crop + crop_size + context_pixels > img.shape[0]
+        ):
+            raise ValueError(
+                f"Image cropping failed for {img_path}.",
+            )
 
         if get_crop_coordinates:
             return x_crop - x_min_ref, y_crop - y_min_ref, crop_size
@@ -386,8 +397,8 @@ def crop_image(
             y_crop = img.shape[0] - (crop_size + context_pixels)
 
     img = img[
-        y_crop - context_pixels:y_crop + crop_size + context_pixels,
-        x_crop - context_pixels:x_crop + crop_size + context_pixels,
+        y_crop - context_pixels : y_crop + crop_size + context_pixels,
+        x_crop - context_pixels : x_crop + crop_size + context_pixels,
         :,
     ]
 
@@ -396,8 +407,8 @@ def crop_image(
     img = F.resize(img, output_dim + margin)
 
     mask = mask[
-        y_crop:y_crop + crop_size + margin,
-        x_crop:x_crop + crop_size + margin,
+        y_crop : y_crop + crop_size + margin,
+        x_crop : x_crop + crop_size + margin,
     ]
 
     x_max_ref -= x_crop
@@ -458,7 +469,9 @@ def fill_mask_with_color(img, mask, colors):
         mask = torch.where(mask == cls, 1.0, 0.0)
         dims = img.shape
 
-        assert (len(color) == dims[-3]), "fill_mask_with_color: number of channels does not match"
+        assert (
+            len(color) == dims[-3]
+        ), "fill_mask_with_color: number of channels does not match"
         color = torch.tensor(color).repeat_interleave(dims[-2] * dims[-1]).reshape(dims)
         img = img * (1 - mask) + color * mask
 
@@ -466,21 +479,21 @@ def fill_mask_with_color(img, mask, colors):
 
 
 def sanitize_paths(
-        paths_img,
-        paths_bb,
-        mask_random_offset,
-        mask_delta,
-        crop_delta,
-        mask_square,
-        crop_dim,
-        output_dim,
-        context_pixels,
-        load_size,
-        select_cat=-1,
-        data_relative_paths=False,
-        data_root_path="",
-        max_dataset_size=float("inf"),
-        verbose=False,
+    paths_img,
+    paths_bb,
+    mask_random_offset,
+    mask_delta,
+    crop_delta,
+    mask_square,
+    crop_dim,
+    output_dim,
+    context_pixels,
+    load_size,
+    select_cat=-1,
+    data_relative_paths=False,
+    data_root_path="",
+    max_dataset_size=float("inf"),
+    verbose=False,
 ):
     return_paths_img = []
     return_paths_bb = []
@@ -529,11 +542,14 @@ def sanitize_paths(
             return_paths_img.append(path_img)
             return_paths_bb.append(path_bb)
 
-    print("%d images deleted over %d,remaining %d images" % (
-        len(paths_img) - len(return_paths_img),
-        len(paths_img),
-        len(return_paths_img),
-    ))
+    print(
+        "%d images deleted over %d,remaining %d images"
+        % (
+            len(paths_img) - len(return_paths_img),
+            len(paths_img),
+            len(return_paths_img),
+        )
+    )
 
     return return_paths_img, return_paths_bb
 
