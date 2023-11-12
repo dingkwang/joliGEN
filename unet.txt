@@ -1,0 +1,765 @@
+DiffusionGenerator(
+  (denoise_fn): PaletteDenoiseFn(
+    (model): UNet(
+      (input_blocks): ModuleList(
+        (0): EmbedSequential(
+          (0): Conv2d(6, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        )
+        (1): EmbedSequential(
+          (0): ResBlock(
+            (in_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 64, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (h_upd): Identity()
+            (x_upd): Identity()
+            (emb_layers): Sequential(
+              (0): SiLU()
+              (1): Linear(in_features=32, out_features=128, bias=True)
+            )
+            (out_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 64, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Dropout(p=False, inplace=False)
+              (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (skip_connection): Identity()
+          )
+        )
+        (2): EmbedSequential(
+          (0): ResBlock(
+            (in_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 64, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (h_upd): Identity()
+            (x_upd): Identity()
+            (emb_layers): Sequential(
+              (0): SiLU()
+              (1): Linear(in_features=32, out_features=128, bias=True)
+            )
+            (out_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 64, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Dropout(p=False, inplace=False)
+              (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (skip_connection): Identity()
+          )
+        )
+        (3): EmbedSequential(
+          (0): ResBlock(
+            (in_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 64, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (h_upd): Downsample(
+              (op): AvgPool2d(kernel_size=2, stride=2, padding=0)
+            )
+            (x_upd): Downsample(
+              (op): AvgPool2d(kernel_size=2, stride=2, padding=0)
+            )
+            (emb_layers): Sequential(
+              (0): SiLU()
+              (1): Linear(in_features=32, out_features=128, bias=True)
+            )
+            (out_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 64, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Dropout(p=False, inplace=False)
+              (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (skip_connection): Identity()
+          )
+        )
+        (4): EmbedSequential(
+          (0): ResBlock(
+            (in_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 64, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (h_upd): Identity()
+            (x_upd): Identity()
+            (emb_layers): Sequential(
+              (0): SiLU()
+              (1): Linear(in_features=32, out_features=256, bias=True)
+            )
+            (out_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 128, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Dropout(p=False, inplace=False)
+              (3): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (skip_connection): Conv2d(64, 128, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (5): EmbedSequential(
+          (0): ResBlock(
+            (in_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 128, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (h_upd): Identity()
+            (x_upd): Identity()
+            (emb_layers): Sequential(
+              (0): SiLU()
+              (1): Linear(in_features=32, out_features=256, bias=True)
+            )
+            (out_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 128, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Dropout(p=False, inplace=False)
+              (3): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (skip_connection): Identity()
+          )
+        )
+        (6): EmbedSequential(
+          (0): ResBlock(
+            (in_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 128, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (h_upd): Downsample(
+              (op): AvgPool2d(kernel_size=2, stride=2, padding=0)
+            )
+            (x_upd): Downsample(
+              (op): AvgPool2d(kernel_size=2, stride=2, padding=0)
+            )
+            (emb_layers): Sequential(
+              (0): SiLU()
+              (1): Linear(in_features=32, out_features=256, bias=True)
+            )
+            (out_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 128, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Dropout(p=False, inplace=False)
+              (3): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (skip_connection): Identity()
+          )
+        )
+        (7): EmbedSequential(
+          (0): ResBlock(
+            (in_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 128, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (h_upd): Identity()
+            (x_upd): Identity()
+            (emb_layers): Sequential(
+              (0): SiLU()
+              (1): Linear(in_features=32, out_features=512, bias=True)
+            )
+            (out_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 256, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Dropout(p=False, inplace=False)
+              (3): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (skip_connection): Conv2d(128, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (8): EmbedSequential(
+          (0): ResBlock(
+            (in_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 256, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (h_upd): Identity()
+            (x_upd): Identity()
+            (emb_layers): Sequential(
+              (0): SiLU()
+              (1): Linear(in_features=32, out_features=512, bias=True)
+            )
+            (out_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 256, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Dropout(p=False, inplace=False)
+              (3): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (skip_connection): Identity()
+          )
+        )
+        (9): EmbedSequential(
+          (0): ResBlock(
+            (in_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 256, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (h_upd): Downsample(
+              (op): AvgPool2d(kernel_size=2, stride=2, padding=0)
+            )
+            (x_upd): Downsample(
+              (op): AvgPool2d(kernel_size=2, stride=2, padding=0)
+            )
+            (emb_layers): Sequential(
+              (0): SiLU()
+              (1): Linear(in_features=32, out_features=512, bias=True)
+            )
+            (out_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 256, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Dropout(p=False, inplace=False)
+              (3): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (skip_connection): Identity()
+          )
+        )
+        (10): EmbedSequential(
+          (0): ResBlock(
+            (in_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 256, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (h_upd): Identity()
+            (x_upd): Identity()
+            (emb_layers): Sequential(
+              (0): SiLU()
+              (1): Linear(in_features=32, out_features=1024, bias=True)
+            )
+            (out_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 512, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Dropout(p=False, inplace=False)
+              (3): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (skip_connection): Conv2d(256, 512, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (11): EmbedSequential(
+          (0): ResBlock(
+            (in_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 512, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (h_upd): Identity()
+            (x_upd): Identity()
+            (emb_layers): Sequential(
+              (0): SiLU()
+              (1): Linear(in_features=32, out_features=1024, bias=True)
+            )
+            (out_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 512, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Dropout(p=False, inplace=False)
+              (3): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (skip_connection): Identity()
+          )
+        )
+      )
+      (middle_block): EmbedSequential(
+        (0): ResBlock(
+          (in_layers): Sequential(
+            (0): GroupNorm(
+              (norm): GroupNorm(32, 512, eps=1e-05, affine=True)
+            )
+            (1): SiLU()
+            (2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          )
+          (h_upd): Identity()
+          (x_upd): Identity()
+          (emb_layers): Sequential(
+            (0): SiLU()
+            (1): Linear(in_features=32, out_features=1024, bias=True)
+          )
+          (out_layers): Sequential(
+            (0): GroupNorm(
+              (norm): GroupNorm(32, 512, eps=1e-05, affine=True)
+            )
+            (1): SiLU()
+            (2): Dropout(p=False, inplace=False)
+            (3): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          )
+          (skip_connection): Identity()
+        )
+        (1): AttentionBlock(
+          (norm): BatchInstanceNorm1dC(
+            (norm): InstanceNorm1d(512, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+          )
+          (qkv): Conv1d(512, 1536, kernel_size=(1,), stride=(1,))
+          (attention): QKVAttentionLegacy()
+          (proj_out): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+        )
+        (2): ResBlock(
+          (in_layers): Sequential(
+            (0): GroupNorm(
+              (norm): GroupNorm(32, 512, eps=1e-05, affine=True)
+            )
+            (1): SiLU()
+            (2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          )
+          (h_upd): Identity()
+          (x_upd): Identity()
+          (emb_layers): Sequential(
+            (0): SiLU()
+            (1): Linear(in_features=32, out_features=1024, bias=True)
+          )
+          (out_layers): Sequential(
+            (0): GroupNorm(
+              (norm): GroupNorm(32, 512, eps=1e-05, affine=True)
+            )
+            (1): SiLU()
+            (2): Dropout(p=False, inplace=False)
+            (3): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          )
+          (skip_connection): Identity()
+        )
+      )
+      (output_blocks): ModuleList(
+        (0): EmbedSequential(
+          (0): ResBlock(
+            (in_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 1024, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Conv2d(1024, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (h_upd): Identity()
+            (x_upd): Identity()
+            (emb_layers): Sequential(
+              (0): SiLU()
+              (1): Linear(in_features=32, out_features=1024, bias=True)
+            )
+            (out_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 512, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Dropout(p=False, inplace=False)
+              (3): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (skip_connection): Conv2d(1024, 512, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (1): EmbedSequential(
+          (0): ResBlock(
+            (in_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 1024, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Conv2d(1024, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (h_upd): Identity()
+            (x_upd): Identity()
+            (emb_layers): Sequential(
+              (0): SiLU()
+              (1): Linear(in_features=32, out_features=1024, bias=True)
+            )
+            (out_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 512, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Dropout(p=False, inplace=False)
+              (3): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (skip_connection): Conv2d(1024, 512, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (2): EmbedSequential(
+          (0): ResBlock(
+            (in_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 768, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Conv2d(768, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (h_upd): Identity()
+            (x_upd): Identity()
+            (emb_layers): Sequential(
+              (0): SiLU()
+              (1): Linear(in_features=32, out_features=1024, bias=True)
+            )
+            (out_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 512, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Dropout(p=False, inplace=False)
+              (3): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (skip_connection): Conv2d(768, 512, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (1): ResBlock(
+            (in_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 512, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (h_upd): Upsample()
+            (x_upd): Upsample()
+            (emb_layers): Sequential(
+              (0): SiLU()
+              (1): Linear(in_features=32, out_features=1024, bias=True)
+            )
+            (out_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 512, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Dropout(p=False, inplace=False)
+              (3): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (skip_connection): Identity()
+          )
+        )
+        (3): EmbedSequential(
+          (0): ResBlock(
+            (in_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 768, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Conv2d(768, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (h_upd): Identity()
+            (x_upd): Identity()
+            (emb_layers): Sequential(
+              (0): SiLU()
+              (1): Linear(in_features=32, out_features=512, bias=True)
+            )
+            (out_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 256, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Dropout(p=False, inplace=False)
+              (3): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (skip_connection): Conv2d(768, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (4): EmbedSequential(
+          (0): ResBlock(
+            (in_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 512, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Conv2d(512, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (h_upd): Identity()
+            (x_upd): Identity()
+            (emb_layers): Sequential(
+              (0): SiLU()
+              (1): Linear(in_features=32, out_features=512, bias=True)
+            )
+            (out_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 256, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Dropout(p=False, inplace=False)
+              (3): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (skip_connection): Conv2d(512, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (5): EmbedSequential(
+          (0): ResBlock(
+            (in_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 384, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Conv2d(384, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (h_upd): Identity()
+            (x_upd): Identity()
+            (emb_layers): Sequential(
+              (0): SiLU()
+              (1): Linear(in_features=32, out_features=512, bias=True)
+            )
+            (out_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 256, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Dropout(p=False, inplace=False)
+              (3): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (skip_connection): Conv2d(384, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (1): ResBlock(
+            (in_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 256, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (h_upd): Upsample()
+            (x_upd): Upsample()
+            (emb_layers): Sequential(
+              (0): SiLU()
+              (1): Linear(in_features=32, out_features=512, bias=True)
+            )
+            (out_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 256, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Dropout(p=False, inplace=False)
+              (3): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (skip_connection): Identity()
+          )
+        )
+        (6): EmbedSequential(
+          (0): ResBlock(
+            (in_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 384, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Conv2d(384, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (h_upd): Identity()
+            (x_upd): Identity()
+            (emb_layers): Sequential(
+              (0): SiLU()
+              (1): Linear(in_features=32, out_features=256, bias=True)
+            )
+            (out_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 128, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Dropout(p=False, inplace=False)
+              (3): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (skip_connection): Conv2d(384, 128, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (7): EmbedSequential(
+          (0): ResBlock(
+            (in_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 256, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Conv2d(256, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (h_upd): Identity()
+            (x_upd): Identity()
+            (emb_layers): Sequential(
+              (0): SiLU()
+              (1): Linear(in_features=32, out_features=256, bias=True)
+            )
+            (out_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 128, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Dropout(p=False, inplace=False)
+              (3): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (skip_connection): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (8): EmbedSequential(
+          (0): ResBlock(
+            (in_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 192, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Conv2d(192, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (h_upd): Identity()
+            (x_upd): Identity()
+            (emb_layers): Sequential(
+              (0): SiLU()
+              (1): Linear(in_features=32, out_features=256, bias=True)
+            )
+            (out_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 128, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Dropout(p=False, inplace=False)
+              (3): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (skip_connection): Conv2d(192, 128, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (1): ResBlock(
+            (in_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 128, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (h_upd): Upsample()
+            (x_upd): Upsample()
+            (emb_layers): Sequential(
+              (0): SiLU()
+              (1): Linear(in_features=32, out_features=256, bias=True)
+            )
+            (out_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 128, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Dropout(p=False, inplace=False)
+              (3): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (skip_connection): Identity()
+          )
+        )
+        (9): EmbedSequential(
+          (0): ResBlock(
+            (in_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 192, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Conv2d(192, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (h_upd): Identity()
+            (x_upd): Identity()
+            (emb_layers): Sequential(
+              (0): SiLU()
+              (1): Linear(in_features=32, out_features=128, bias=True)
+            )
+            (out_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 64, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Dropout(p=False, inplace=False)
+              (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (skip_connection): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (10): EmbedSequential(
+          (0): ResBlock(
+            (in_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 128, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Conv2d(128, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (h_upd): Identity()
+            (x_upd): Identity()
+            (emb_layers): Sequential(
+              (0): SiLU()
+              (1): Linear(in_features=32, out_features=128, bias=True)
+            )
+            (out_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 64, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Dropout(p=False, inplace=False)
+              (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (skip_connection): Conv2d(128, 64, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (11): EmbedSequential(
+          (0): ResBlock(
+            (in_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 128, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Conv2d(128, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (h_upd): Identity()
+            (x_upd): Identity()
+            (emb_layers): Sequential(
+              (0): SiLU()
+              (1): Linear(in_features=32, out_features=128, bias=True)
+            )
+            (out_layers): Sequential(
+              (0): GroupNorm(
+                (norm): GroupNorm(32, 64, eps=1e-05, affine=True)
+              )
+              (1): SiLU()
+              (2): Dropout(p=False, inplace=False)
+              (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+            (skip_connection): Conv2d(128, 64, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+      )
+      (out): Sequential(
+        (0): GroupNorm(
+          (norm): GroupNorm(32, 64, eps=1e-05, affine=True)
+        )
+        (1): SiLU()
+        (2): Conv2d(64, 3, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+    )
+  )
+  (cond_embed): Sequential(
+    (0): Linear(in_features=32, out_features=32, bias=True)
+    (1): SiLU()
+    (2): Linear(in_features=32, out_features=32, bias=True)
+  )
+)
